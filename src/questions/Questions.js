@@ -12,9 +12,10 @@ class Questions extends Component {
     }
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.getArrayForDict = this.getArrayForDict.bind(this);
+    //this.getArrayForDict = this.getArrayForDict.bind(this);
     this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
     this.prettyQuestion = this.prettyQuestion.bind(this);
+    this.sortQuestionObjects = this.sortQuestionObjects.bind(this);
 
   }
 
@@ -48,7 +49,7 @@ class Questions extends Component {
   prettyQuestion(qid, questionsDict) {
       console.log('qid : ' + qid);
       console.log('questionsDict : ' + JSON.stringify(questionsDict));
-    if (questionsDict) {
+    if (questionsDict && qid) {
       let option1 = questionsDict[qid]['optionOne']['text'];
       let option2 = questionsDict[qid]['optionTwo']['text'];
       return `${option1} OR ${option2}?`
@@ -56,10 +57,28 @@ class Questions extends Component {
     return
   }
 
+  sortQuestionObjects(questionsDict) {
+    let questionObjects = [];
+
+    questionObjects = (Object.keys(questionsDict)).map(id => questionsDict[id]);
+    questionObjects.sort((a, b) => {
+      return b.timestamp - a.timestamp;
+    })
+
+    return questionObjects;
+  }
+
   render() {
     const {userQuestions, userAnswers, isLoggedIn, questions} = this.props;
-    let questionsAr;
+    let questionsArSorted;
+    // REFACTOR revisit all the if logic; are they necessary?
+    if (questions) {
+      questionsArSorted = this.sortQuestionObjects(questions);
+    }
+    // list of question id's
     let questionsDisplay = [];
+    let questionsDisplaySorted = [];
+    let questionsDisplayObjectsSorted = [];
 
     // filter for unanswered questions
     if (userAnswers && questions && this.state.questionType === "unanswered") {
@@ -71,6 +90,18 @@ class Questions extends Component {
     if (userAnswers && questions && this.state.questionType === "answered") {
       questionsDisplay = Object.keys(userAnswers);
       console.log('questionsDisplay: ' + questionsDisplay);
+    }
+
+    // TODO 041018 sort the ar questionsDisplay using questionsArSorted
+    if (questionsDisplay && questionsArSorted) {
+      let qidRecentToOld = questionsArSorted.map(obj => obj['id']);
+      qidRecentToOld.forEach(qid => {
+        if (questionsDisplay.indexOf(qid) > -1) {
+          questionsDisplaySorted.push(qid)
+        }
+        console.log('questionsDisplaySorted: ' + questionsDisplaySorted);
+      })
+      questionsDisplay = questionsDisplaySorted;
     }
 
     return (

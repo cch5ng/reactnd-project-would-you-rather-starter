@@ -6,6 +6,8 @@ import logo from './logo.svg';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
 import { fetchUsers } from './users/usersActions';
+import { fetchQuestions } from './questions/questionsActions';
+import Questions from './questions/Questions';
 // import { _getUsers } from './_DATA'
 // import Nav from './Nav';
 
@@ -25,6 +27,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchUsers());
+    this.props.dispatch(fetchQuestions());
   }
 
   onChangeHandler(ev) {
@@ -84,18 +87,34 @@ class App extends Component {
   render() {
     let isLoggedIn;
     let userDictionary;
+    let curUserId;
     let curUser;
     let userAr;
+    let questionDictionary;
+    let userAnswers;
+    let userQuestions;
+
     if (this.props.users && this.props.users.users) {
       userDictionary = this.props.users.users;
       userAr = this.makeArrayFromDictionary(userDictionary);
     }
+
+    // if user logged in, get user name and user questions
     if (this.props.login) {
       isLoggedIn = this.props.login['isLoggedIn'];
       if (isLoggedIn) {
         let loggedInUid = this.state['loginUser'];
         if (userDictionary) {
           curUser = userDictionary[loggedInUid]['name'];
+        }
+        if (this.props.questions && this.props.questions.questions) {
+          questionDictionary = this.props.questions.questions;
+          console.log('questionDictionary: ' + JSON.stringify(questionDictionary));
+          userAnswers = userDictionary[loggedInUid]['answers'];
+          userQuestions = userDictionary[loggedInUid]['questions'];
+
+          console.log('userAnswers: ' + JSON.stringify(userAnswers));
+
         }
       }
     }
@@ -128,7 +147,11 @@ class App extends Component {
 
           <main>
             <Route exact path="/" render={() => (
-                <div>test data</div>
+                <Questions isLoggedIn={isLoggedIn} 
+                  userQuestions={userQuestions} 
+                  userAnswers={userAnswers}
+                  questions={questionDictionary}
+                />
               )}
             />
             <Route exact path="/questions/:question_id" render={() => (
@@ -151,10 +174,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ login, users }) {
+function mapStateToProps({ login, users, questions }) {
   return {
     login,
-    users
+    users,
+    questions
   }
 }
 

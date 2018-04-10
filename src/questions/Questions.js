@@ -1,62 +1,139 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import './App.css';
-
-/*
-
-          <header className="App-header">
-            <h1 className="App-title">Would You Rather</h1>
-            <p>login select list</p>
-          </header>
-
-*/
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import '../App.css';
 
 class Questions extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loginUser: '',
-      isLoggedIn: false
+      questionType: "unanswered",
     }
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
+    //this.getArrayForDict = this.getArrayForDict.bind(this);
+    this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
+    this.prettyQuestion = this.prettyQuestion.bind(this);
+    this.sortQuestionObjects = this.sortQuestionObjects.bind(this);
+
   }
 
   onChangeHandler(ev) {
+    console.log('gets here')
     let value = ev.target.value;
     let stateChange = {};
+
     stateChange[ev.target.name] = value;
-    this.setState(stateChange, function() {
-      if (this.state.loginUser.length) {
-        // change state to logged in
-        console.log('user is logged in');
-      }
-    });
+    this.setState(stateChange);
+  }
+
+  getUnansweredQuestions(userAnswers, allQuestions) {
+    let unansweredQuestions;
+    let answeredSet;
+    if (userAnswers) {
+      answeredSet = new Set(Object.keys(userAnswers));
+    }
+    let allQuestionsSet;
+    if (allQuestions) {
+      allQuestionsSet = new Set(Object.keys(allQuestions));
+    }
+
+    if (allQuestionsSet && answeredSet) {
+      unansweredQuestions = [...allQuestionsSet].filter(qid => !answeredSet.has(qid))
+    }
+
+    return unansweredQuestions;
+  }
+
+  prettyQuestion(qid, questionsDict) {
+      console.log('qid : ' + qid);
+      console.log('questionsDict : ' + JSON.stringify(questionsDict));
+    if (questionsDict && qid) {
+      let option1 = questionsDict[qid]['optionOne']['text'];
+      let option2 = questionsDict[qid]['optionTwo']['text'];
+      return `${option1} OR ${option2}?`
+    }
+    return
+  }
+
+  sortQuestionObjects(questionsDict) {
+    let questionObjects = [];
+
+    questionObjects = (Object.keys(questionsDict)).map(id => questionsDict[id]);
+    questionObjects.sort((a, b) => {
+      return b.timestamp - a.timestamp;
+    })
+
+    return questionObjects;
   }
 
   render() {
-    //const post = this.props.post
-    return (
-      <div className="header title">
-        <div className="header-main">
-          <h2><Link to="/" className="header-main">Would You Rather</Link></h2>
-        </div>
-        <div className="header-contact">
-          <p className="contact">
-            <Link to="/">Questions</Link>
-            <Link to="/leaderboard">Leader Board</Link>
-            <span>User-name and Logout</span>
-            <span>Select list for user names</span>
-          </p>
-          <select value={this.state.loginUser} onChange={this.onChangeHandler} name="loginUser">
-            <option value="">Login</option>
-            <option value="sarahedo">Sarah Edo</option>
-            <option value="tylermcginnis">Tyler McGinnis</option>
-            <option value="johndoe">John Doe</option>
-          </select>
-        </div>
+    const {userQuestions, userAnswers, isLoggedIn, questions} = this.props;
+    let questionsArSorted;
+    // REFACTOR revisit all the if logic; are they necessary?
+    if (questions) {
+      questionsArSorted = this.sortQuestionObjects(questions);
+    }
+    // list of question id's
+    let questionsDisplay = [];
+    let questionsDisplaySorted = [];
+    let questionsDisplayObjectsSorted = [];
 
+    // filter for unanswered questions
+    if (userAnswers && questions && this.state.questionType === "unanswered") {
+      questionsDisplay = this.getUnansweredQuestions(userAnswers, questions);
+      console.log('questionsDisplay: ' + questionsDisplay);
+    }
+
+    // filter for answered questions
+    if (userAnswers && questions && this.state.questionType === "answered") {
+      questionsDisplay = Object.keys(userAnswers);
+      console.log('questionsDisplay: ' + questionsDisplay);
+    }
+
+    // TODO 041018 sort the ar questionsDisplay using questionsArSorted
+    if (questionsDisplay && questionsArSorted) {
+      let qidRecentToOld = questionsArSorted.map(obj => obj['id']);
+      qidRecentToOld.forEach(qid => {
+        if (questionsDisplay.indexOf(qid) > -1) {
+          questionsDisplaySorted.push(qid)
+        }
+        console.log('questionsDisplaySorted: ' + questionsDisplaySorted);
+      })
+      questionsDisplay = questionsDisplaySorted;
+    }
+
+    return (
+      <div className="">
+        <h1>Questions</h1>
+        {isLoggedIn && (
+          <div>
+            <label>Filter by questions 
+              <select value={this.state.loginUser} onChange={this.onChangeHandler} name="questionType">
+                <option value="unanswered">Unanswered</option>
+                <option value="answered">Answered</option>
+              </select>
+               by this user
+            </label>
+
+            <hr />
+
+            {questionsDisplay.map(qid => {
+              let prettyQuestion = this.prettyQuestion(qid, questions);
+              let link = `/questions/${qid}`
+              return (
+                <div key={qid}>
+                  <h1><Link to={link} className="question-list">Would You Rather: {prettyQuestion}</Link></h1>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {!isLoggedIn && (
+          <div>Sorry, you need to log in to view questions.</div>
+        )}
 
       </div>
     )

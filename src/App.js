@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
-import { _getUsers } from './_DATA'
-//import Nav from './Nav';
+import { fetchUsers } from './users/usersActions';
+// import { _getUsers } from './_DATA'
+// import Nav from './Nav';
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-
+    this.props.dispatch(fetchUsers());
   }
 
   onChangeHandler(ev) {
@@ -50,6 +51,10 @@ class App extends Component {
             'tylermcginnis': 'Tyler McGinnis',
             'johndoe': 'John Doe'
            }
+  }
+
+  getUsersArray() {
+
   }
 
 /*
@@ -97,8 +102,6 @@ class App extends Component {
               <p className="contact">
                 <Link to="/">Questions</Link>
                 <Link to="/leaderboard">Leader Board</Link>
-                <span>User-name and Logout</span>
-                <span>Select list for user names</span>
               </p>
               {isLoggedIn === false && (
                 <select value={this.state.loginUser} onChange={this.onChangeHandler} name="loginUser">
@@ -126,12 +129,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ login }) {
+function mapStateToProps({ login, users }) {
   return {
     login,
+    users
   }
 }
 
 export default connect(mapStateToProps)(App);
-
-//export default App;

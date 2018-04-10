@@ -20,7 +20,7 @@ class App extends Component {
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.logout = this.logout.bind(this);
-    this.getUserDictionary = this.getUserDictionary.bind(this);
+    this.makeArrayFromDictionary = this.makeArrayFromDictionary.bind(this);
   }
 
   componentDidMount() {
@@ -46,15 +46,15 @@ class App extends Component {
     this.props.dispatch(receiveLogout());
   }
 
-  getUserDictionary() {
-    return {'sarahedo': 'Sarah Edo',
-            'tylermcginnis': 'Tyler McGinnis',
-            'johndoe': 'John Doe'
-           }
-  }
+  // getUserDictionary() {
+  //   return {'sarahedo': 'Sarah Edo',
+  //           'tylermcginnis': 'Tyler McGinnis',
+  //           'johndoe': 'John Doe'
+  //          }
+  // }
 
-  getUsersArray() {
-
+  makeArrayFromDictionary(dict) {
+    return Object.keys(dict).map(uid => dict[uid]);
   }
 
 /*
@@ -83,12 +83,21 @@ class App extends Component {
 
   render() {
     let isLoggedIn;
-    let userDictionary = this.getUserDictionary();
+    let userDictionary;
     let curUser;
+    let userAr;
+    if (this.props.users && this.props.users.users) {
+      userDictionary = this.props.users.users;
+      userAr = this.makeArrayFromDictionary(userDictionary);
+    }
     if (this.props.login) {
-      console.log('login: ' + JSON.stringify(this.props.login));
       isLoggedIn = this.props.login['isLoggedIn'];
-      curUser = userDictionary[this.state['loginUser']];
+      if (isLoggedIn) {
+        let loggedInUid = this.state['loginUser'];
+        if (userDictionary) {
+          curUser = userDictionary[loggedInUid]['name'];
+        }
+      }
     }
 
     return (
@@ -106,9 +115,9 @@ class App extends Component {
               {isLoggedIn === false && (
                 <select value={this.state.loginUser} onChange={this.onChangeHandler} name="loginUser">
                   <option value="">Login</option>
-                  <option value="sarahedo">Sarah Edo</option>
-                  <option value="tylermcginnis">Tyler McGinnis</option>
-                  <option value="johndoe">John Doe</option>
+                  {userAr.map(user => {
+                    return (<option value={user["id"]} key={user["id"]}>{user["name"]}</option>)
+                  })}
                 </select>
               )}
               {isLoggedIn === true && (

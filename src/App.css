@@ -1,31 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
 .App {
-  text-align: center;
+  /*text-align: center;*/
+  margin: 0 5% 20px 5%;
 }
 
-.App-logo {
-  /*animation: App-logo-spin infinite 20s linear;*/
-  height: 80px;
-}
-
-.App-header {
-  background-color: #323232;
-  height: 50px;
-  padding: 20px;
-  color: #ffe0e0;
-}
-
-.App-title {
-  font-size: 1.8em;
-  font-family: 'Stylish', sans-serif;
-}
-
-.App-intro {
-  font-size: large;
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
 }
 
 /*@keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+*/
+/* Nav */
+
+.header {
+  background-color: #1f2035;
+  box-sizing: border-box;
+  /*color: white;*/
+}
+
+/*.title:after {
+  clear: both;
 }*/
 
+.header-main,
+.header-contact {
+  color: #f5ffa6; /*#d8f2e1;*/
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
 
+.contact {
+  /*color: #6666e0;*/
+  /*font-size: 1.35em;*/
+  padding: 12px 0;
+  text-align: center;
+}
+
+.contact a:link,
+.contact a:visited {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+/* Form */
+.form-container {
+  background-color: #cceae7;
+  padding: 15px;
+}
+
+.button {
+  height: 25px;
+  font-size: 14px;
+  margin-right: 3px;
+  padding: 0 5px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: #fff;
+}
+
+.button:hover {
+  background-color: #f4fafa;
+}
+
+input {
+  width: calc(100% - 34px);
+  height: 25px;
+  padding-left: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+textarea {
+  width: calc(100% - 34px);
+  height: 60px;
+  padding-left: 8px;  
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+select,
+option {
+  height: 25px;
+  font-size: 14px;  
+}
+
+input:focus,
+select:focus,
+option:focus,
+textarea:focus {
+  outline: none !important;
+  border:1px solid #c0e585; /*#d6ff94;*/
+  box-shadow: 0 0 10px #c0e585; /*#d6ff94; #d6ff94;*/
+}
+
+@media (min-width: 768px) {
+
+  .header {
+    background-color: #1f2035;
+    height: 70px;
+  }
+
+  .header-main,
+  .header-contact {
+    float: left;
+    display: inline-block;
+  }
+
+  .header-main,
+  .header-contact {
+    width: calc(50% - 30px / 2);
+  }
+
+  .header-main {
+    margin-top: 15px;
+    margin-left: 15px;
+    text-align: left;
+  }
+
+  .header-contact {
+    text-align: right;
+    vertical-align: top;
+    margin-top: 8px;
+    margin-right: 15px;
+  }
+
+  .contact {
+    padding-bottom: 12px;
+    text-align: right;
+  }
+
+  .contact a:link,
+  .contact a:visited {
+    padding-left: 12px;
+    display: inline;
+  }
+
+  .col-50p {
+    width: 50%;
+  }
+
+}

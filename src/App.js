@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
+import Nav from './Nav';
 
 class App extends Component {
   constructor(props) {
@@ -10,21 +13,46 @@ class App extends Component {
     };
   }
 
+
+/*
+
+          <Route exact path="/" render={() => (
+              <Questions />
+            )}
+          />
+
+          <Route exact path="/questions/:question_id" render={() => (
+              <Questions />
+            )}
+          />
+
+          <Route exact path="/add" render={() => (
+              <Questions />
+            )}
+          />
+
+          <Route exact path="/leaderboard" render={() => (
+              <Questions />
+            )}
+          />
+
+*/
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Would You Rather</h1>
-          <p>login select list</p>
-        </header>
-        <main>
-          <li>would you rather questions</li>
+      <Router>
+        <div className="App">
+          <Nav />
 
-        </main>
-        <footer>
+          <main>
+            <li>would you rather questions</li>
 
-        </footer>
-      </div>
+          </main>
+          <footer>
+
+          </footer>
+        </div>
+      </Router>
     );
   }
 }

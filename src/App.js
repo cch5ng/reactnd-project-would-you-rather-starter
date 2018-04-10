@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
+import { _getUsers } from './_DATA'
 //import Nav from './Nav';
 
 class App extends Component {
@@ -18,6 +19,11 @@ class App extends Component {
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.logout = this.logout.bind(this);
+    this.getUserDictionary = this.getUserDictionary.bind(this);
+  }
+
+  componentDidMount() {
+
   }
 
   onChangeHandler(ev) {
@@ -37,6 +43,13 @@ class App extends Component {
     console.log('clicked logout');
     this.setState({loginUser: ''});
     this.props.dispatch(receiveLogout());
+  }
+
+  getUserDictionary() {
+    return {'sarahedo': 'Sarah Edo',
+            'tylermcginnis': 'Tyler McGinnis',
+            'johndoe': 'John Doe'
+           }
   }
 
 /*
@@ -65,9 +78,12 @@ class App extends Component {
 
   render() {
     let isLoggedIn;
+    let userDictionary = this.getUserDictionary();
+    let curUser;
     if (this.props.login) {
       console.log('login: ' + JSON.stringify(this.props.login));
       isLoggedIn = this.props.login['isLoggedIn'];
+      curUser = userDictionary[this.state['loginUser']];
     }
 
     return (
@@ -93,7 +109,7 @@ class App extends Component {
                 </select>
               )}
               {isLoggedIn === true && (
-                <Link to="/" onClick={this.logout} >Logout</Link>
+                <Link to="/" onClick={this.logout} >Logout {curUser}</Link>
               )}
             </div>
           </div>

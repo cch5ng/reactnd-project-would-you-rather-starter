@@ -103,7 +103,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <div className="header title">
+          <header className="header title">
             <div className="header-main">
               <h2><Link to="/" className="header-main">Would You Rather</Link></h2>
             </div>
@@ -124,10 +124,23 @@ class App extends Component {
                 <Link to="/" onClick={this.logout} >Logout {curUser}</Link>
               )}
             </div>
-          </div>
+          </header>
 
           <main>
-            <li>would you rather questions</li>
+            <Route exact path="/" render={() => (
+                <div>test data</div>
+              )}
+            />
+            <Route exact path="/questions/:question_id" render={() => (
+                <div>test data</div>
+              )}
+            />
+            <Route exact path="/leaderboard" render={() => (
+                <div>test data</div>
+              )}
+            />
+
+
           </main>
 
           <footer>Link to source

@@ -151,7 +151,7 @@ class App extends Component {
               )}
             />
             <Route exact path="/questions/:question_id" render={({match}) => (
-                <QuestionDetail match={match} />
+                <QuestionDetail match={match} userDictionary={userDictionary} />
               )}
             />
             <Route exact path="/leaderboard" render={() => (

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
+//import logo from '../logo.svg';
 import { fetchQuestions } from '../questions/questionsActions';
 
 class QuestionDetail extends Component {
@@ -89,6 +90,7 @@ class QuestionDetail extends Component {
     let option2Text;
     let option2Votes;
     let option2VotePercent;
+    let avatarUrl = '';
 
     if (login && login.isLoggedIn) {
       isLoggedIn = login.isLoggedIn;
@@ -107,6 +109,11 @@ class QuestionDetail extends Component {
         option2Text = question['optionTwo']['text'];
         option2Votes = question['optionTwo']['votes'].length;
         option2VotePercent = this.getPercentVoted(option2Votes, totalUsers);
+        let authorId = question['author']
+        if (userDictionary[authorId]) {
+          avatarUrl = userDictionary[authorId]['avatarURL']; //['avatarURL'];
+          console.log('avatarUrl: ' + JSON.stringify(avatarUrl));
+        }
       }
     }
 
@@ -122,30 +129,28 @@ class QuestionDetail extends Component {
 
     return (
       <div className="">
-        <h1>Questions</h1>
+        <h1>Would You Rather?</h1>
         {isLoggedIn && questionAnswered && (
           <div>
-                <div key={qid}>
-                  <h1>Would You Rather?</h1>
-                  <div>
-                    <p>1: {option1Text}</p>
-                    <p>votes: {option1Votes}</p>
-                    <p>percent who voted: {option1VotePercent}(% of all users)</p>
-                  </div>
-                  <div>
-                    <p>2: {option2Text}</p>
-                    <p>votes: {option2Votes}</p>
-                    <p>percent who voted: {option2VotePercent}(% of all users)</p>
-                  </div>
-                </div>
+            <p><img src={avatarUrl} alt="user avatar" /></p>
+            <div>
+              <p>1: {option1Text}</p>
+              <p>votes: {option1Votes}</p>
+              <p>percent who voted: {option1VotePercent}(% of all users)</p>
+            </div>
+            <div>
+              <p>2: {option2Text}</p>
+              <p>votes: {option2Votes}</p>
+              <p>percent who voted: {option2VotePercent}(% of all users)</p>
+            </div>
           </div>
         )}
 
         {isLoggedIn && !questionAnswered && (
           <div>
-                <div key={qid}>
-                  <h1>Would You Rather: OPTION 1 OR OPTION 2?</h1>
-                </div>
+            <p><img src={avatarUrl} alt="user avatar" /></p>
+            <p>1: {option1Text}</p>
+            <p>2: {option2Text}</p>
           </div>
         )}
 

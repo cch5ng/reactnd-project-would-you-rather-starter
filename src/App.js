@@ -37,7 +37,7 @@ class App extends Component {
       if (this.state.loginUser.length) {
         // change state to logged in
         console.log('user is logged in');
-        this.props.dispatch(receiveLogin());
+        this.props.dispatch(receiveLogin(this.state.loginUser));
       }
     });
   }
@@ -60,6 +60,7 @@ class App extends Component {
   }
 
 /*
+
 
           <Route exact path="/" render={() => (
               <Questions />

@@ -8,8 +8,7 @@ import { receiveLogin, receiveLogout } from './login/loginActions';
 import { fetchUsers } from './users/usersActions';
 import { fetchQuestions } from './questions/questionsActions';
 import Questions from './questions/Questions';
-// import { _getUsers } from './_DATA'
-// import Nav from './Nav';
+import QuestionDetail from './questions/QuestionDetail';
 
 class App extends Component {
   constructor(props) {
@@ -67,10 +66,6 @@ class App extends Component {
             )}
           />
 
-          <Route exact path="/questions/:question_id" render={() => (
-              <Questions />
-            )}
-          />
 
           <Route exact path="/add" render={() => (
               <Questions />
@@ -154,8 +149,8 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/questions/:question_id" render={() => (
-                <div>test data</div>
+            <Route exact path="/questions/:question_id" render={({match}) => (
+                <QuestionDetail match={match} />
               )}
             />
             <Route exact path="/leaderboard" render={() => (

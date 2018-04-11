@@ -11,19 +11,17 @@ class QuestionDetail extends Component {
     this.state = {
     }
 
-    // this.onChangeHandler = this.onChangeHandler.bind(this);
-    //this.getArrayForDict = this.getArrayForDict.bind(this);
-    // this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
-    // this.prettyQuestion = this.prettyQuestion.bind(this);
-    // this.sortQuestionObjects = this.sortQuestionObjects.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
+    this.getPercentVoted = this.getPercentVoted.bind(this);
 
   }
 
   componentDidMount() {
+    // making BE request to support user entering the url manually into browser
     this.props.dispatch(fetchQuestions());
   }
 
-  onChangeHandler(ev) {
+  onClickHandler(ev) {
     console.log('gets here')
     let value = ev.target.value;
     let stateChange = {};
@@ -31,6 +29,11 @@ class QuestionDetail extends Component {
     stateChange[ev.target.name] = value;
     this.setState(stateChange);
   }
+
+  getPercentVoted(numVotes, totalUsers) {
+    return numVotes / totalUsers * 100;
+  }
+
 
   // getUnansweredQuestions(userAnswers, allQuestions) {
   //   let unansweredQuestions;
@@ -73,26 +76,79 @@ class QuestionDetail extends Component {
   // }
 
   render() {
-    const {login, questions, match} = this.props;
+    const {login, questions, match, userDictionary} = this.props;
     const qid = match.params.question_id;
-
-    console.log('this.props: ' + JSON.stringify(this.props));
-    console.log('qid: ' + qid);
-    // need filter questions obj for the cur qid
     let isLoggedIn;
+    let loggedInId;
+    let question;
+    let questionAnswered = false;
+    let totalUsers = Object.keys(userDictionary).length;
+    let option1Text;
+    let option1Votes;
+    let option1VotePercent;
+    let option2Text;
+    let option2Votes;
+    let option2VotePercent;
+
+    if (login && login.isLoggedIn) {
+      isLoggedIn = login.isLoggedIn;
+      loggedInId = login.loggedInId;
+      console.log('loggedInId: ' + loggedInId);
+    }
+
+    if (questions && questions.questions) {
+      console.log('questions: ' + JSON.stringify(questions));
+      question = questions.questions[qid];
+      console.log('question: ' + JSON.stringify(question));
+      if (question) {
+        option1Text = question['optionOne']['text'];
+        option1Votes = question['optionOne']['votes'].length;
+        option1VotePercent = this.getPercentVoted(option1Votes, totalUsers);
+        option2Text = question['optionTwo']['text'];
+        option2Votes = question['optionTwo']['votes'].length;
+        option2VotePercent = this.getPercentVoted(option2Votes, totalUsers);
+      }
+    }
+
+    if (isLoggedIn && question) {
+      let userAnsweredQuestions = Object.keys(userDictionary[loggedInId]['answers']);
+      if (userAnsweredQuestions.indexOf(qid) > -1) {
+        questionAnswered = true;
+      }
+    }
+
+    // need filter questions obj for the cur qid
     // TODO fix
-    isLoggedIn = true;
 
     return (
       <div className="">
         <h1>Questions</h1>
-        {isLoggedIn && (
+        {isLoggedIn && questionAnswered && (
+          <div>
+                <div key={qid}>
+                  <h1>Would You Rather?</h1>
+                  <div>
+                    <p>1: {option1Text}</p>
+                    <p>votes: {option1Votes}</p>
+                    <p>percent who voted: {option1VotePercent}(% of all users)</p>
+                  </div>
+                  <div>
+                    <p>2: {option2Text}</p>
+                    <p>votes: {option2Votes}</p>
+                    <p>percent who voted: {option2VotePercent}(% of all users)</p>
+                  </div>
+                </div>
+          </div>
+        )}
+
+        {isLoggedIn && !questionAnswered && (
           <div>
                 <div key={qid}>
                   <h1>Would You Rather: OPTION 1 OR OPTION 2?</h1>
                 </div>
           </div>
         )}
+
 
         {!isLoggedIn && (
           <div>Sorry, you need to log in to view this question.</div>
@@ -103,10 +159,9 @@ class QuestionDetail extends Component {
   }
 }
 
-function mapStateToProps({ login, users, questions }) {
+function mapStateToProps({ login, questions }) {
   return {
     login,
-    users,
     questions
   }
 }

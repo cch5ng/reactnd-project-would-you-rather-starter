@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 //import logo from '../logo.svg';
-import { fetchQuestions } from '../questions/questionsActions';
+import { fetchQuestions, updateAnswer } from '../questions/questionsActions';
 
 class QuestionDetail extends Component {
   constructor(props) {
@@ -22,13 +22,9 @@ class QuestionDetail extends Component {
     this.props.dispatch(fetchQuestions());
   }
 
-  onClickHandler(ev) {
-    console.log('gets here')
-    let value = ev.target.value;
-    let stateChange = {};
-
-    stateChange[ev.target.name] = value;
-    this.setState(stateChange);
+  onClickHandler(uid, qid, answer) {
+    console.log('answer: ' + answer);
+    this.props.dispatch(updateAnswer(uid, qid, answer))
   }
 
   getPercentVoted(numVotes, totalUsers) {
@@ -149,8 +145,8 @@ class QuestionDetail extends Component {
         {isLoggedIn && !questionAnswered && (
           <div>
             <p><img src={avatarUrl} alt="user avatar" /></p>
-            <p>1: {option1Text}</p>
-            <p>2: {option2Text}</p>
+            <p className="optionOne" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.className)}>1: {option1Text}</p>
+            <p className="optionTwo" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.className)}>2: {option2Text}</p>
           </div>
         )}
 

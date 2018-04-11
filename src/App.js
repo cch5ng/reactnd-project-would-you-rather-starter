@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
 import { fetchUsers } from './users/usersActions';
 import { fetchQuestions } from './questions/questionsActions';
 import Questions from './questions/Questions';
-// import { _getUsers } from './_DATA'
-// import Nav from './Nav';
+import QuestionDetail from './questions/QuestionDetail';
 
 class App extends Component {
   constructor(props) {
@@ -38,7 +36,7 @@ class App extends Component {
       if (this.state.loginUser.length) {
         // change state to logged in
         console.log('user is logged in');
-        this.props.dispatch(receiveLogin());
+        this.props.dispatch(receiveLogin(this.state.loginUser));
       }
     });
   }
@@ -62,15 +60,12 @@ class App extends Component {
 
 /*
 
+
           <Route exact path="/" render={() => (
               <Questions />
             )}
           />
 
-          <Route exact path="/questions/:question_id" render={() => (
-              <Questions />
-            )}
-          />
 
           <Route exact path="/add" render={() => (
               <Questions />
@@ -154,8 +149,8 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/questions/:question_id" render={() => (
-                <div>test data</div>
+            <Route exact path="/questions/:question_id" render={({match}) => (
+                <QuestionDetail match={match} userDictionary={userDictionary} />
               )}
             />
             <Route exact path="/leaderboard" render={() => (

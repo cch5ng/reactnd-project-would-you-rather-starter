@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
 import { fetchUsers } from './users/usersActions';

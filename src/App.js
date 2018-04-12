@@ -9,6 +9,7 @@ import { fetchQuestions } from './questions/questionsActions';
 import Questions from './questions/Questions';
 import QuestionDetail from './questions/QuestionDetail';
 import QuestionForm from './questions/QuestionForm';
+import Error from './Error';
 
 class App extends Component {
   constructor(props) {
@@ -157,8 +158,10 @@ class App extends Component {
                 <div>test data</div>
               )}
             />
-
-
+            <Route exact path="/404" render={() => (
+                <Error />
+              )}
+            />
           </main>
 
           <footer>Link to source

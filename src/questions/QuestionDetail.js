@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 //import logo from '../logo.svg';
@@ -109,6 +109,9 @@ class QuestionDetail extends Component {
           </div>
         )}
 
+        {isLoggedIn && !question && (
+          <Redirect to="/404" />
+        )}
 
         {!isLoggedIn && (
           <div>Sorry, you need to log in to view this question.</div>

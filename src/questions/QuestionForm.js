@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../App.css';
@@ -12,6 +12,7 @@ class QuestionForm extends Component {
     this.state = {
       optionOne: '',
       optionTwo: '',
+      pollSubmitted: false
     }
 
     this.onChange = this.onChange.bind(this);
@@ -35,6 +36,8 @@ class QuestionForm extends Component {
 
     question = {optionOneText, optionTwoText, author}
     this.props.dispatch(saveQuestion(question));
+    form.reset();
+    this.setState({pollSubmitted: true})
   }
 
   render() {
@@ -65,6 +68,10 @@ class QuestionForm extends Component {
 
         {!isLoggedIn && (
           <div>Sorry, you need to log in to add a question.</div>
+        )}
+
+        {this.state.pollSubmitted && (
+          <Redirect to="/" />
         )}
       </div>
     )

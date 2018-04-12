@@ -1,5 +1,6 @@
 import { REQUEST_USERS, RECEIVE_USERS } from '../users/usersActions';
-import { REQUEST_ANSWER_UPDATE, RECEIVE_ANSWER_UPDATE } from '../questions/questionsActions';
+import { REQUEST_ANSWER_UPDATE, RECEIVE_ANSWER_UPDATE, RECEIVE_SAVE_QUESTION
+ } from '../questions/questionsActions';
 
 const initStateUsers = {
   users: {}
@@ -32,6 +33,19 @@ export function users(state = initStateUsers, action) {
           }
         }
       }
+    case RECEIVE_SAVE_QUESTION:
+      let uid = action.question.author;
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          [uid]: {
+            ...state.users[uid],
+            questions: (state.users[uid]['questions']).concat(action.question.id)
+          }
+        }
+      }
+
     default:
       return state
   }

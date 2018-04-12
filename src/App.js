@@ -8,6 +8,8 @@ import { fetchUsers } from './users/usersActions';
 import { fetchQuestions } from './questions/questionsActions';
 import Questions from './questions/Questions';
 import QuestionDetail from './questions/QuestionDetail';
+import QuestionForm from './questions/QuestionForm';
+import Error from './Error';
 
 class App extends Component {
   constructor(props) {
@@ -66,12 +68,6 @@ class App extends Component {
             )}
           />
 
-
-          <Route exact path="/add" render={() => (
-              <Questions />
-            )}
-          />
-
           <Route exact path="/leaderboard" render={() => (
               <Questions />
             )}
@@ -124,6 +120,7 @@ class App extends Component {
             <div className="header-contact">
               <p className="contact">
                 <Link to="/">Questions</Link>
+                <Link to="/add">New Question</Link>
                 <Link to="/leaderboard">Leader Board</Link>
               </p>
               {isLoggedIn === false && (
@@ -153,12 +150,18 @@ class App extends Component {
                 <QuestionDetail match={match} userDictionary={userDictionary} />
               )}
             />
+            <Route exact path="/add" render={() => (
+                <QuestionForm />
+              )}
+            />
             <Route exact path="/leaderboard" render={() => (
                 <div>test data</div>
               )}
             />
-
-
+            <Route exact path="/404" render={() => (
+                <Error />
+              )}
+            />
           </main>
 
           <footer>Link to source

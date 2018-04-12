@@ -1,57 +1,91 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import './App.css';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import '../App.css';
+import { saveQuestion } from '../questions/questionsActions';
 
 class QuestionForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loginUser: '',
-      isLoggedIn: false
+      optionOne: '',
+      optionTwo: '',
+      pollSubmitted: false
     }
 
-    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChangeHandler(ev) {
+  onChange(ev) {
     let value = ev.target.value;
     let stateChange = {};
     stateChange[ev.target.name] = value;
-    this.setState(stateChange, function() {
-      if (this.state.loginUser.length) {
-        // change state to logged in
-        console.log('user is logged in');
-      }
-    });
+    this.setState(stateChange);
+  }
+
+  onSubmit(ev, loggedInId) {
+    ev.preventDefault();
+    let form = document.querySelector('.question-form')
+    let question;
+    let optionOneText = this.state.optionOne;
+    let optionTwoText = this.state.optionTwo;
+    let author = loggedInId;
+
+    question = {optionOneText, optionTwoText, author}
+    this.props.dispatch(saveQuestion(question));
+    form.reset();
+    this.setState({pollSubmitted: true})
   }
 
   render() {
-    //const post = this.props.post
+    const {login} = this.props;
+    let isLoggedIn;
+    let loggedInId;
+
+    if (login && login.isLoggedIn) {
+      isLoggedIn = login.isLoggedIn;
+      loggedInId = login.loggedInId;
+    }
+
     return (
-      <div className="header title">
-        <div className="header-main">
-          <h2><Link to="/" className="header-main">Would You Rather</Link></h2>
-        </div>
-        <div className="header-contact">
-          <p className="contact">
-            <Link to="/">Questions</Link>
-            <Link to="/leaderboard">Leader Board</Link>
-            <span>User-name and Logout</span>
-            <span>Select list for user names</span>
-          </p>
-          <select value={this.state.loginUser} onChange={this.onChangeHandler} name="loginUser">
-            <option value="">Login</option>
-            <option value="sarahedo">Sarah Edo</option>
-            <option value="tylermcginnis">Tyler McGinnis</option>
-            <option value="johndoe">John Doe</option>
-          </select>
-        </div>
+      <div className="">
+        <h2>Would You Rather</h2>
 
+        {isLoggedIn && (
+          <form className="question-form">
+            <label>Option 1
+              <input type="text" className="" name="optionOne" onChange={this.onChange} />
+            </label>
+            <label>Option 2
+              <input type="text" className="" name="optionTwo" onChange={this.onChange} />
+            </label>
+            <button value="save" onClick={(ev) => this.onSubmit(ev, loggedInId)}>Save</button>
+          </form>
+        )}
 
+        {!isLoggedIn && (
+          <div>Sorry, you need to log in to add a question.</div>
+        )}
+
+        {this.state.pollSubmitted && (
+          <Redirect to="/" />
+        )}
       </div>
     )
   }
 }
 
-export default QuestionForm;
+function mapStateToProps({ login }) {
+  return {
+    login
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ saveQuestion }, dispatch);
+}
+
+export default connect(mapStateToProps)(QuestionForm);

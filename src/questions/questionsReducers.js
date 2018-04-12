@@ -1,5 +1,6 @@
 import { REQUEST_QUESTIONS, RECEIVE_QUESTIONS, REQUEST_ANSWER_UPDATE,
-RECEIVE_ANSWER_UPDATE } from '../questions/questionsActions';
+RECEIVE_ANSWER_UPDATE, REQUEST_SAVE_QUESTION, RECEIVE_SAVE_QUESTION
+ } from '../questions/questionsActions';
 
 const initStateQuestions = {
   questions: {}
@@ -38,6 +39,21 @@ export function questions(state = initStateQuestions, action) {
         }
         },
       }
+    case REQUEST_SAVE_QUESTION:
+      return {
+        ...state,
+        isRetrieving: action.isRetrieving,
+      }
+    case RECEIVE_SAVE_QUESTION:
+      return {
+        ...state,
+        isRetrieving: action.isRetrieving,
+        questions: {
+          ...state.questions,
+          [action.question.id]: action.question
+        }
+      }
+
     default:
       return state
   }

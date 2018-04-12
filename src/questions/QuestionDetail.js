@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 //import logo from '../logo.svg';
@@ -30,47 +30,6 @@ class QuestionDetail extends Component {
   getPercentVoted(numVotes, totalUsers) {
     return numVotes / totalUsers * 100;
   }
-
-
-  // getUnansweredQuestions(userAnswers, allQuestions) {
-  //   let unansweredQuestions;
-  //   let answeredSet;
-  //   if (userAnswers) {
-  //     answeredSet = new Set(Object.keys(userAnswers));
-  //   }
-  //   let allQuestionsSet;
-  //   if (allQuestions) {
-  //     allQuestionsSet = new Set(Object.keys(allQuestions));
-  //   }
-
-  //   if (allQuestionsSet && answeredSet) {
-  //     unansweredQuestions = [...allQuestionsSet].filter(qid => !answeredSet.has(qid))
-  //   }
-
-  //   return unansweredQuestions;
-  // }
-
-  // prettyQuestion(qid, questionsDict) {
-  //     console.log('qid : ' + qid);
-  //     console.log('questionsDict : ' + JSON.stringify(questionsDict));
-  //   if (questionsDict && qid) {
-  //     let option1 = questionsDict[qid]['optionOne']['text'];
-  //     let option2 = questionsDict[qid]['optionTwo']['text'];
-  //     return `${option1} OR ${option2}?`
-  //   }
-  //   return
-  // }
-
-  // sortQuestionObjects(questionsDict) {
-  //   let questionObjects = [];
-
-  //   questionObjects = (Object.keys(questionsDict)).map(id => questionsDict[id]);
-  //   questionObjects.sort((a, b) => {
-  //     return b.timestamp - a.timestamp;
-  //   })
-
-  //   return questionObjects;
-  // }
 
   render() {
     const {login, questions, match, userDictionary} = this.props;
@@ -150,6 +109,9 @@ class QuestionDetail extends Component {
           </div>
         )}
 
+        {isLoggedIn && !question && (
+          <Redirect to="/404" />
+        )}
 
         {!isLoggedIn && (
           <div>Sorry, you need to log in to view this question.</div>

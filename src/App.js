@@ -9,6 +9,7 @@ import { fetchQuestions } from './questions/questionsActions';
 import Questions from './questions/Questions';
 import QuestionDetail from './questions/QuestionDetail';
 import QuestionForm from './questions/QuestionForm';
+import LeaderBoard from './leaderBoard/LeaderBoard';
 import Error from './Error';
 
 class App extends Component {
@@ -64,11 +65,6 @@ class App extends Component {
 
 
           <Route exact path="/" render={() => (
-              <Questions />
-            )}
-          />
-
-          <Route exact path="/leaderboard" render={() => (
               <Questions />
             )}
           />
@@ -155,7 +151,7 @@ class App extends Component {
               )}
             />
             <Route exact path="/leaderboard" render={() => (
-                <div>test data</div>
+                <LeaderBoard />
               )}
             />
             <Route exact path="/404" render={() => (

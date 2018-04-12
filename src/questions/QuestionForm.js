@@ -50,15 +50,22 @@ class QuestionForm extends Component {
     return (
       <div className="">
         <h2>Would You Rather</h2>
-        <form className="question-form">
-          <label>Option 1
-            <input type="text" className="" name="optionOne" onChange={this.onChange} />
-          </label>
-          <label>Option 2
-            <input type="text" className="" name="optionTwo" onChange={this.onChange} />
-          </label>
-          <button value="save" onClick={(ev) => this.onSubmit(ev, loggedInId)}>Save</button>
-        </form>
+
+        {isLoggedIn && (
+          <form className="question-form">
+            <label>Option 1
+              <input type="text" className="" name="optionOne" onChange={this.onChange} />
+            </label>
+            <label>Option 2
+              <input type="text" className="" name="optionTwo" onChange={this.onChange} />
+            </label>
+            <button value="save" onClick={(ev) => this.onSubmit(ev, loggedInId)}>Save</button>
+          </form>
+        )}
+
+        {!isLoggedIn && (
+          <div>Sorry, you need to log in to add a question.</div>
+        )}
       </div>
     )
   }

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import '../App.css';
 import { saveQuestion } from '../questions/questionsActions';
 
-class QuestionForm extends Component {
+export class QuestionForm extends Component {
   constructor(props) {
     super(props);
 

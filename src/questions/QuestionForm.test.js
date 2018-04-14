@@ -18,9 +18,10 @@ test('Form renders', () => {
   ReactDOM.render(<QuestionForm />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  // const component = renderer.create(
-  //   <QuestionForm />,
-  // );
-  // let tree = component.toJSON();
-  // expect(tree).toMatchSnapshot();
+  // snapshot test
+  const tree = renderer
+    .create(<QuestionForm />,)
+    .toJSON();
+
+    expect(tree).toMatchSnapshot();
 });

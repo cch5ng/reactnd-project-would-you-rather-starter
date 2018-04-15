@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
+import { getArFromDict, sortByPropertyDesc, getPrettyQuestion } from '../utilities/utilities';
 
 class Questions extends Component {
   constructor(props) {
@@ -13,9 +14,6 @@ class Questions extends Component {
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
-    this.prettyQuestion = this.prettyQuestion.bind(this);
-    this.sortQuestionObjects = this.sortQuestionObjects.bind(this);
-
   }
 
   onChangeHandler(ev) {
@@ -44,34 +42,15 @@ class Questions extends Component {
     return unansweredQuestions;
   }
 
-  prettyQuestion(qid, questionsDict) {
-      console.log('qid : ' + qid);
-      console.log('questionsDict : ' + JSON.stringify(questionsDict));
-    if (questionsDict && qid) {
-      let option1 = questionsDict[qid]['optionOne']['text'];
-      let option2 = questionsDict[qid]['optionTwo']['text'];
-      return `${option1} OR ${option2}?`
-    }
-    return
-  }
-
-  sortQuestionObjects(questionsDict) {
-    let questionObjects = [];
-
-    questionObjects = (Object.keys(questionsDict)).map(id => questionsDict[id]);
-    questionObjects.sort((a, b) => {
-      return b.timestamp - a.timestamp;
-    })
-
-    return questionObjects;
-  }
-
   render() {
     const {userQuestions, userAnswers, isLoggedIn, questions} = this.props;
     let questionsArSorted;
+    let questionsAr;
+
     // REFACTOR revisit all the if logic; are they necessary?
     if (questions) {
-      questionsArSorted = this.sortQuestionObjects(questions);
+      questionsAr = getArFromDict(questions);
+      questionsArSorted = sortByPropertyDesc(questionsAr, 'timestamp');
     }
     // list of question id's
     let questionsDisplay = [];
@@ -115,7 +94,7 @@ class Questions extends Component {
             <hr />
 
             {questionsDisplay.map(qid => {
-              let prettyQuestion = this.prettyQuestion(qid, questions);
+              let prettyQuestion = getPrettyQuestion(qid, questions);
               let link = `/questions/${qid}`
               return (
                 <div key={qid}>

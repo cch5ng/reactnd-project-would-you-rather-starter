@@ -12,6 +12,7 @@ import QuestionDetail from './questions/QuestionDetail';
 import QuestionForm from './questions/QuestionForm';
 import LeaderBoard from './leaderBoard/LeaderBoard';
 import Error from './Error';
+import { getArFromDict } from './utilities/utilities';
 
 export class App extends Component {
   constructor(props) {
@@ -24,14 +25,11 @@ export class App extends Component {
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.logout = this.logout.bind(this);
-    this.makeArrayFromDictionary = this.makeArrayFromDictionary.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchUsers();
-    //this.props.dispatch(fetchUsers());
     this.props.fetchQuestions();
-    //this.props.dispatch(fetchQuestions());
   }
 
   onChangeHandler(ev) {
@@ -42,7 +40,6 @@ export class App extends Component {
       if (this.state.loginUser.length) {
         // change state to logged in
         this.props.receiveLogin(this.state.loginUser);
-        //this.props.dispatch(receiveLogin(this.state.loginUser));
       }
     });
   }
@@ -50,11 +47,6 @@ export class App extends Component {
   logout(ev) {
     this.setState({loginUser: ''});
     this.props.receiveLogout();
-    // this.props.dispatch(receiveLogout());
-  }
-
-  makeArrayFromDictionary(dict) {
-    return Object.keys(dict).map(uid => dict[uid]);
   }
 
   render() {
@@ -69,7 +61,7 @@ export class App extends Component {
 
     if (this.props.users && this.props.users.users) {
       userDictionary = this.props.users.users;
-      userAr = this.makeArrayFromDictionary(userDictionary);
+      userAr = getArFromDict(userDictionary);
     }
 
     // if user logged in, get user name and user questions
@@ -170,13 +162,5 @@ const mapDispatchToProps = (dispatch) => {
     receiveLogout
   }, dispatch);
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//     fetchUsers,
-//     fetchQuestions
-//   }, dispatch);
-// };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

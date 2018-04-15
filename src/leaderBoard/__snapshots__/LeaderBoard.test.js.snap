@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaderBoard renders 1`] = `
+<div
+  className=""
+>
+  <h2>
+    Leader Board
+  </h2>
+  <div>
+    Sorry, you need to log in to view this page.
+  </div>
+</div>
+`;

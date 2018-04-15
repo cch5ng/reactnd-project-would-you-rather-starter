@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
-import { getArFromDict, sortByPropertyDesc, getPrettyQuestion } from '../utilities/utilities';
+import { getArFromDict, sortByPropertyDesc, getPrettyQuestion, getUnansweredQuestions } from '../utilities/utilities';
 
 class Questions extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class Questions extends Component {
     }
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
   }
 
   onChangeHandler(ev) {
@@ -22,24 +21,6 @@ class Questions extends Component {
 
     stateChange[ev.target.name] = value;
     this.setState(stateChange);
-  }
-
-  getUnansweredQuestions(userAnswers, allQuestions) {
-    let unansweredQuestions;
-    let answeredSet;
-    if (userAnswers) {
-      answeredSet = new Set(Object.keys(userAnswers));
-    }
-    let allQuestionsSet;
-    if (allQuestions) {
-      allQuestionsSet = new Set(Object.keys(allQuestions));
-    }
-
-    if (allQuestionsSet && answeredSet) {
-      unansweredQuestions = [...allQuestionsSet].filter(qid => !answeredSet.has(qid))
-    }
-
-    return unansweredQuestions;
   }
 
   render() {
@@ -59,7 +40,7 @@ class Questions extends Component {
 
     // filter for unanswered questions
     if (userAnswers && questions && this.state.questionType === "unanswered") {
-      questionsDisplay = this.getUnansweredQuestions(userAnswers, questions);
+      questionsDisplay = getUnansweredQuestions(userAnswers, questions);
     }
 
     // filter for answered questions

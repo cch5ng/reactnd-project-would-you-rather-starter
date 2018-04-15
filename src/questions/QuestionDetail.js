@@ -15,7 +15,6 @@ export class QuestionDetail extends Component {
     }
 
     this.onClickHandler = this.onClickHandler.bind(this);
-    //this.getPercentVoted = this.getPercentVoted.bind(this);
   }
 
   componentDidMount() {
@@ -27,10 +26,6 @@ export class QuestionDetail extends Component {
     console.log('answer: ' + answer);
     this.props.updateAnswer(uid, qid, answer);
   }
-
-  // getPercentVoted(numVotes, totalUsers) {
-  //   return numVotes / totalUsers * 100;
-  // }
 
   render() {
     const {login, questions, match, userDictionary} = this.props;
@@ -59,11 +54,9 @@ export class QuestionDetail extends Component {
         option1Text = question['optionOne']['text'];
         option1Votes = question['optionOne']['votes'].length;
         option1VotePercent = getPercentVoted(option1Votes, totalUsers);
-        //this.getPercentVoted(option1Votes, totalUsers);
         option2Text = question['optionTwo']['text'];
         option2Votes = question['optionTwo']['votes'].length;
         option2VotePercent = getPercentVoted(option2Votes, totalUsers);
-        //this.getPercentVoted(option2Votes, totalUsers);
         let authorId = question['author']
         if (userDictionary[authorId]) {
           avatarUrl = userDictionary[authorId]['avatarURL'];

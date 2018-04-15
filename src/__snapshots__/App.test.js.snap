@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders 1`] = `
+<div
+  className="App"
+>
+  <header
+    className="header title"
+  >
+    <div
+      className="header-main"
+    >
+      <h2>
+        <a
+          className="header-main"
+          href="/"
+          onClick={[Function]}
+        >
+          Would You Rather
+        </a>
+      </h2>
+    </div>
+    <div
+      className="header-contact"
+    >
+      <p
+        className="contact"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Questions
+        </a>
+        <a
+          href="/add"
+          onClick={[Function]}
+        >
+          New Question
+        </a>
+        <a
+          href="/leaderboard"
+          onClick={[Function]}
+        >
+          Leader Board
+        </a>
+      </p>
+    </div>
+  </header>
+  <main>
+    <div
+      className=""
+    >
+      <h1>
+        Questions
+      </h1>
+      <div>
+        Sorry, you need to log in to view questions.
+      </div>
+    </div>
+  </main>
+  <footer>
+    Link to source
+  </footer>
+</div>
+`;

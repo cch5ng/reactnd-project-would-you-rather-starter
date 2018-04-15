@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
-//import logo from '../logo.svg';
 import { fetchQuestions, updateAnswer } from '../questions/questionsActions';
 
-class QuestionDetail extends Component {
+export class QuestionDetail extends Component {
   constructor(props) {
     super(props);
 

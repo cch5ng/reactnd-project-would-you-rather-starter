@@ -12,7 +12,6 @@ class Questions extends Component {
     }
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    //this.getArrayForDict = this.getArrayForDict.bind(this);
     this.getUnansweredQuestions = this.getUnansweredQuestions.bind(this);
     this.prettyQuestion = this.prettyQuestion.bind(this);
     this.sortQuestionObjects = this.sortQuestionObjects.bind(this);
@@ -20,7 +19,6 @@ class Questions extends Component {
   }
 
   onChangeHandler(ev) {
-    console.log('gets here')
     let value = ev.target.value;
     let stateChange = {};
 

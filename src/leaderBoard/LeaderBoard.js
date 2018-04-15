@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 
-class LeaderBoard extends Component {
+export class LeaderBoard extends Component {
   constructor(props) {
     super(props);
   }

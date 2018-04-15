@@ -81,13 +81,11 @@ class Questions extends Component {
     // filter for unanswered questions
     if (userAnswers && questions && this.state.questionType === "unanswered") {
       questionsDisplay = this.getUnansweredQuestions(userAnswers, questions);
-      console.log('questionsDisplay: ' + questionsDisplay);
     }
 
     // filter for answered questions
     if (userAnswers && questions && this.state.questionType === "answered") {
       questionsDisplay = Object.keys(userAnswers);
-      console.log('questionsDisplay: ' + questionsDisplay);
     }
 
     // TODO 041018 sort the ar questionsDisplay using questionsArSorted
@@ -97,7 +95,6 @@ class Questions extends Component {
         if (questionsDisplay.indexOf(qid) > -1) {
           questionsDisplaySorted.push(qid)
         }
-        console.log('questionsDisplaySorted: ' + questionsDisplaySorted);
       })
       questionsDisplay = questionsDisplaySorted;
     }

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Questions list renders 1`] = `
+<div
+  className=""
+>
+  <h1>
+    Questions
+  </h1>
+  <div>
+    <label>
+      Filter by questions
+      <select
+        name="questionType"
+        onChange={[Function]}
+        value={undefined}
+      >
+        <option
+          value="unanswered"
+        >
+          Unanswered
+        </option>
+        <option
+          value="answered"
+        >
+          Answered
+        </option>
+      </select>
+      by this user
+    </label>
+    <hr />
+  </div>
+</div>
+`;

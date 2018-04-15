@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import '../App.css';
-//import logo from '../logo.svg';
 import { fetchQuestions, updateAnswer } from '../questions/questionsActions';
 
-class QuestionDetail extends Component {
+export class QuestionDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -19,12 +19,12 @@ class QuestionDetail extends Component {
 
   componentDidMount() {
     // making BE request to support user entering the url manually into browser
-    this.props.dispatch(fetchQuestions());
+    this.props.fetchQuestions();
   }
 
   onClickHandler(uid, qid, answer) {
     console.log('answer: ' + answer);
-    this.props.dispatch(updateAnswer(uid, qid, answer))
+    this.props.updateAnswer(uid, qid, answer);
   }
 
   getPercentVoted(numVotes, totalUsers) {
@@ -50,13 +50,10 @@ class QuestionDetail extends Component {
     if (login && login.isLoggedIn) {
       isLoggedIn = login.isLoggedIn;
       loggedInId = login.loggedInId;
-      console.log('loggedInId: ' + loggedInId);
     }
 
     if (questions && questions.questions) {
-      console.log('questions: ' + JSON.stringify(questions));
       question = questions.questions[qid];
-      console.log('question: ' + JSON.stringify(question));
       if (question) {
         option1Text = question['optionOne']['text'];
         option1Votes = question['optionOne']['votes'].length;
@@ -67,7 +64,6 @@ class QuestionDetail extends Component {
         let authorId = question['author']
         if (userDictionary[authorId]) {
           avatarUrl = userDictionary[authorId]['avatarURL']; //['avatarURL'];
-          console.log('avatarUrl: ' + JSON.stringify(avatarUrl));
         }
       }
     }
@@ -129,4 +125,8 @@ function mapStateToProps({ login, questions }) {
   }
 }
 
-export default connect(mapStateToProps)(QuestionDetail);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchQuestions, updateAnswer }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetail);

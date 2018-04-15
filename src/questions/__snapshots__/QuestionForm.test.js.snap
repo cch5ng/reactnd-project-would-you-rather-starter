@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form renders 1`] = `
+<div
+  className=""
+>
+  <h2>
+    Would You Rather
+  </h2>
+  <div>
+    Sorry, you need to log in to add a question.
+  </div>
+</div>
+`;

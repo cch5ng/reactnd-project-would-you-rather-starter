@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './App.css';
 import { receiveLogin, receiveLogout } from './login/loginActions';
 import { fetchUsers } from './users/usersActions';
@@ -12,7 +13,7 @@ import QuestionForm from './questions/QuestionForm';
 import LeaderBoard from './leaderBoard/LeaderBoard';
 import Error from './Error';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
 
@@ -27,8 +28,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchUsers());
-    this.props.dispatch(fetchQuestions());
+    this.props.fetchUsers();
+    //this.props.dispatch(fetchUsers());
+    this.props.fetchQuestions();
+    //this.props.dispatch(fetchQuestions());
   }
 
   onChangeHandler(ev) {
@@ -38,38 +41,21 @@ class App extends Component {
     this.setState(stateChange, function() {
       if (this.state.loginUser.length) {
         // change state to logged in
-        console.log('user is logged in');
-        this.props.dispatch(receiveLogin(this.state.loginUser));
+        this.props.receiveLogin(this.state.loginUser);
+        //this.props.dispatch(receiveLogin(this.state.loginUser));
       }
     });
   }
 
   logout(ev) {
-    console.log('clicked logout');
     this.setState({loginUser: ''});
-    this.props.dispatch(receiveLogout());
+    this.props.receiveLogout();
+    // this.props.dispatch(receiveLogout());
   }
-
-  // getUserDictionary() {
-  //   return {'sarahedo': 'Sarah Edo',
-  //           'tylermcginnis': 'Tyler McGinnis',
-  //           'johndoe': 'John Doe'
-  //          }
-  // }
 
   makeArrayFromDictionary(dict) {
     return Object.keys(dict).map(uid => dict[uid]);
   }
-
-/*
-
-
-          <Route exact path="/" render={() => (
-              <Questions />
-            )}
-          />
-
-*/
 
   render() {
     let isLoggedIn;
@@ -176,4 +162,21 @@ function mapStateToProps({ login, users, questions }) {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    fetchUsers,
+    fetchQuestions,
+    receiveLogin,
+    receiveLogout
+  }, dispatch);
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({
+//     fetchUsers,
+//     fetchQuestions
+//   }, dispatch);
+// };
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

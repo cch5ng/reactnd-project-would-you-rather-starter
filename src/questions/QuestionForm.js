@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import '../App.css';
 import { saveQuestion } from '../questions/questionsActions';
 
-class QuestionForm extends Component {
+export class QuestionForm extends Component {
   constructor(props) {
     super(props);
 
@@ -35,7 +35,7 @@ class QuestionForm extends Component {
     let author = loggedInId;
 
     question = {optionOneText, optionTwoText, author}
-    this.props.dispatch(saveQuestion(question));
+    this.props.saveQuestion(question);
     form.reset();
     this.setState({pollSubmitted: true})
   }
@@ -88,4 +88,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ saveQuestion }, dispatch);
 }
 
-export default connect(mapStateToProps)(QuestionForm);
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionForm);

@@ -16,6 +16,8 @@ export class LeaderBoard extends Component {
    * @return {ar} [{user}, ...]
    *
    * Given array of users, sorts by number of questions answered (max => min)
+   * Did not abstract this with other helpers because need to sort by number of
+   * keys for answers object value
    */
   sortByAnswersCount(ar) {
     ar.sort((a, b) => {

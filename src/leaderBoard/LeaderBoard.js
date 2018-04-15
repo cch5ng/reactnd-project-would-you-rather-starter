@@ -2,30 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
-import { getArFromDict } from '../utilities/utilities';
+import { getArFromDict, sortByAnswersCount } from '../utilities/utilities';
 
 export class LeaderBoard extends Component {
   constructor(props) {
     super(props);
-
-    this.sortByAnswersCount = this.sortByAnswersCount.bind(this);
-  }
-
-  /*
-   * @param {ar} [{user}, ...]
-   * @return {ar} [{user}, ...]
-   *
-   * Given array of users, sorts by number of questions answered (max => min)
-   * Did not abstract this with other helpers because need to sort by number of
-   * keys for answers object value
-   */
-  sortByAnswersCount(ar) {
-    ar.sort((a, b) => {
-      let bNumAnswers = Object.keys(b.answers).length;
-      let aNumAnswers = Object.keys(a.answers).length;
-      return bNumAnswers - aNumAnswers;
-    });
-    return ar;
   }
 
   render() {
@@ -39,7 +20,7 @@ export class LeaderBoard extends Component {
 
     if (users && users.users) {
       usersAr = getArFromDict(users.users)
-      usersAr = this.sortByAnswersCount(usersAr);
+      usersAr = sortByAnswersCount(usersAr);
       console.log('usersAr: ' + JSON.stringify(usersAr));
     }
 

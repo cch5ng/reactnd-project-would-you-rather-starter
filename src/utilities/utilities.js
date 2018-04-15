@@ -49,3 +49,20 @@ export function getUnansweredQuestions(userAnswers, allQuestions) {
 export function getPercentVoted(numVotes, totalUsers) {
   return numVotes / totalUsers * 100;
 }
+
+  /*
+   * @param {ar} [{user}, ...]
+   * @return {ar} [{user}, ...]
+   *
+   * Given array of users, sorts by number of questions answered (max => min)
+   * Did not abstract this with other helpers because need to sort by number of
+   * keys for answers object value
+   */
+export function sortByAnswersCount(ar) {
+    ar.sort((a, b) => {
+      let bNumAnswers = Object.keys(b.answers).length;
+      let aNumAnswers = Object.keys(a.answers).length;
+      return bNumAnswers - aNumAnswers;
+    });
+    return ar;
+  }

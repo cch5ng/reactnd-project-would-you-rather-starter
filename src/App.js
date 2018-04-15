@@ -74,12 +74,8 @@ export class App extends Component {
         }
         if (this.props.questions && this.props.questions.questions) {
           questionDictionary = this.props.questions.questions;
-          console.log('questionDictionary: ' + JSON.stringify(questionDictionary));
           userAnswers = userDictionary[loggedInUid]['answers'];
           userQuestions = userDictionary[loggedInUid]['questions'];
-
-          console.log('userAnswers: ' + JSON.stringify(userAnswers));
-
         }
       }
     }

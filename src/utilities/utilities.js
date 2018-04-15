@@ -19,20 +19,6 @@ export function sortByPropertyDesc(ar, prop) {
   return ar;
 }
 
-/*
- * @param
- * @return
- *
- * Given an array and property, returns the sorted array by property (min => max)
- */
-export function sortByPropertyAsc(ar, prop) {
-  ar.sort((a, b) => {
-    return a[prop] - b[prop];
-  })
-
-  return ar;
-}
-
 export function getPrettyQuestion(qid, questionsDict) {
   if (questionsDict && qid) {
     let option1 = questionsDict[qid]['optionOne']['text'];

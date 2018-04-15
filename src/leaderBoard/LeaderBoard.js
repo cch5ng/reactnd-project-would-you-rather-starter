@@ -12,8 +12,8 @@ export class LeaderBoard extends Component {
   }
 
   /*
-   *
-   *
+   * @param {ar} [{user}, ...]
+   * @return {ar} [{user}, ...]
    *
    * Given array of users, sorts by number of questions answered (max => min)
    */
@@ -37,13 +37,7 @@ export class LeaderBoard extends Component {
 
     if (users && users.users) {
       usersAr = getArFromDict(users.users)
-      //Object.keys(users.users).map(uid => users.users[uid]);
       usersAr = this.sortByAnswersCount(usersAr);
-      // usersAr.sort((a, b) => {
-      //   let bNumAnswers = Object.keys(b.answers).length;
-      //   let aNumAnswers = Object.keys(a.answers).length;
-      //   return bNumAnswers - aNumAnswers;
-      // });
       console.log('usersAr: ' + JSON.stringify(usersAr));
     }
 

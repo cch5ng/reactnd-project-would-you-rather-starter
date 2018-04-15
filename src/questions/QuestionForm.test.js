@@ -5,14 +5,14 @@ import { QuestionForm } from '../questions/QuestionForm.js';
 import renderer from 'react-test-renderer';
 
 test('Form renders', () => {
-  const store = {
-    login: {
-      login: {
-        isLoggedIn: true,
-        loggedInId: "sarahedo",
-      }
-    }
-  }
+  // const store = {
+  //   login: {
+  //     login: {
+  //       isLoggedIn: true,
+  //       loggedInId: "sarahedo",
+  //     }
+  //   }
+  // }
 
   const div = document.createElement('div');
   ReactDOM.render(<QuestionForm />, div);

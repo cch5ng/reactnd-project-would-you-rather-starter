@@ -88,4 +88,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ saveQuestion }, dispatch);
 }
 
-export default connect(mapStateToProps)(QuestionForm);
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionForm);

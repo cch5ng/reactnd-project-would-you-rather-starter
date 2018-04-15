@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
+import { getArFromDict } from '../utilities/utilities';
 
 export class LeaderBoard extends Component {
   constructor(props) {
     super(props);
+
+    this.sortByAnswersCount = this.sortByAnswersCount.bind(this);
+  }
+
+  /*
+   *
+   *
+   *
+   * Given array of users, sorts by number of questions answered (max => min)
+   */
+  sortByAnswersCount(ar) {
+    ar.sort((a, b) => {
+      let bNumAnswers = Object.keys(b.answers).length;
+      let aNumAnswers = Object.keys(a.answers).length;
+      return bNumAnswers - aNumAnswers;
+    });
+    return ar;
   }
 
   render() {
@@ -18,13 +36,15 @@ export class LeaderBoard extends Component {
     }
 
     if (users && users.users) {
-      usersAr = Object.keys(users.users).map(uid => users.users[uid]);
-      usersAr.sort((a, b) => {
-        let bNumAnswers = Object.keys(b.answers).length;
-        let aNumAnswers = Object.keys(a.answers).length;
-        return bNumAnswers - aNumAnswers;
-      });
-
+      usersAr = getArFromDict(users.users)
+      //Object.keys(users.users).map(uid => users.users[uid]);
+      usersAr = this.sortByAnswersCount(usersAr);
+      // usersAr.sort((a, b) => {
+      //   let bNumAnswers = Object.keys(b.answers).length;
+      //   let aNumAnswers = Object.keys(a.answers).length;
+      //   return bNumAnswers - aNumAnswers;
+      // });
+      console.log('usersAr: ' + JSON.stringify(usersAr));
     }
 
     return (

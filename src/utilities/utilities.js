@@ -59,3 +59,7 @@ export function getUnansweredQuestions(userAnswers, allQuestions) {
 
     return unansweredQuestions;
   }
+
+export function getPercentVoted(numVotes, totalUsers) {
+  return numVotes / totalUsers * 100;
+}

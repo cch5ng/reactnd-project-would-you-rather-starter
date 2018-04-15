@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../App.css';
 import { fetchQuestions, updateAnswer } from '../questions/questionsActions';
+import { getPercentVoted } from '../utilities/utilities';
+
 
 export class QuestionDetail extends Component {
   constructor(props) {
@@ -13,8 +15,7 @@ export class QuestionDetail extends Component {
     }
 
     this.onClickHandler = this.onClickHandler.bind(this);
-    this.getPercentVoted = this.getPercentVoted.bind(this);
-
+    //this.getPercentVoted = this.getPercentVoted.bind(this);
   }
 
   componentDidMount() {
@@ -27,9 +28,9 @@ export class QuestionDetail extends Component {
     this.props.updateAnswer(uid, qid, answer);
   }
 
-  getPercentVoted(numVotes, totalUsers) {
-    return numVotes / totalUsers * 100;
-  }
+  // getPercentVoted(numVotes, totalUsers) {
+  //   return numVotes / totalUsers * 100;
+  // }
 
   render() {
     const {login, questions, match, userDictionary} = this.props;
@@ -57,13 +58,15 @@ export class QuestionDetail extends Component {
       if (question) {
         option1Text = question['optionOne']['text'];
         option1Votes = question['optionOne']['votes'].length;
-        option1VotePercent = this.getPercentVoted(option1Votes, totalUsers);
+        option1VotePercent = getPercentVoted(option1Votes, totalUsers);
+        //this.getPercentVoted(option1Votes, totalUsers);
         option2Text = question['optionTwo']['text'];
         option2Votes = question['optionTwo']['votes'].length;
-        option2VotePercent = this.getPercentVoted(option2Votes, totalUsers);
+        option2VotePercent = getPercentVoted(option2Votes, totalUsers);
+        //this.getPercentVoted(option2Votes, totalUsers);
         let authorId = question['author']
         if (userDictionary[authorId]) {
-          avatarUrl = userDictionary[authorId]['avatarURL']; //['avatarURL'];
+          avatarUrl = userDictionary[authorId]['avatarURL'];
         }
       }
     }
@@ -74,9 +77,6 @@ export class QuestionDetail extends Component {
         questionAnswered = true;
       }
     }
-
-    // need filter questions obj for the cur qid
-    // TODO fix
 
     return (
       <div className="">

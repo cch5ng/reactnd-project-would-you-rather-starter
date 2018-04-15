@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
-import { getArFromDict, sortByPropertyDesc, getPrettyQuestion, getUnansweredQuestions } from '../utilities/utilities';
+import { getArFromDict, sortByPropertyDesc, getPrettyQuestion,
+  getUnansweredQuestions } from '../utilities/utilities';
 
 class Questions extends Component {
   constructor(props) {

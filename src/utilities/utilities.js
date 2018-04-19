@@ -1,13 +1,19 @@
 // helper functions
 
+/*
+ * @param {obj} where key is id and value is object; typically format of redux store
+ * @return [{obj}, {obj}, ...]
+ *
+ * Given a dictionary (object), returns the array of objects
+ */
 export function getArFromDict(dict) {
   let resultAr = Object.keys(dict).map(id => dict[id]);
   return resultAr;
 }
 
 /*
- * @param
- * @return
+ * @param [{obj}, {obj}]; obj like {prop: val, id: mid, ...}
+ * @return [{obj}, {obj}]
  *
  * Given an array and property, returns the sorted array by property (max => min)
  */

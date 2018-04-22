@@ -137,10 +137,77 @@ test('getUnansweredQuestions', () => {
   expect(getUnansweredQuestions(userAnswers, questions)).toEqual(["qid000", "qid002"]);
 });
 
-// test('getPercentVoted', () => {
-//   expect(isCity('San Juan')).toBeTruthy();
-// });
+test('getPercentVoted', () => {
+  expect(getPercentVoted(50, 100)).toBe(50);
+});
 
-// test('sortByAnswersCount', () => {
-//   expect(isCity('San Juan')).toBeTruthy();
-// });
+test('getPercentVoted round down', () => {
+  expect(getPercentVoted(1, 3)).toBe(33);
+});
+
+
+test('sortByAnswersCount', () => {
+  let users = [
+    {
+      id: 'uid000',
+      answers: {
+        "aid000": "optionOne",
+        "aid001": "optionOne",
+        "aid002": "optionTwo",
+        "aid005": "optionTwo"
+      },
+    },
+    {
+      id: 'uid001',
+      answers: {
+        "aid000": "optionOne",
+        "aid001": "optionOne",
+        "aid002": "optionTwo",
+        "aid005": "optionTwo",
+        "aid006": "optionOne",
+        "aid007": "optionTwo",
+        "aid008": "optionTwo"
+      },
+    },
+    {
+      id: 'uid002',
+      answers: {
+        "aid003": "optionOne",
+        "aid004": "optionOne",
+      },
+    }
+  ];
+
+  let sortedUsers = [
+    {
+      id: 'uid001',
+      answers: {
+        "aid000": "optionOne",
+        "aid001": "optionOne",
+        "aid002": "optionTwo",
+        "aid005": "optionTwo",
+        "aid006": "optionOne",
+        "aid007": "optionTwo",
+        "aid008": "optionTwo"
+      },
+    },
+    {
+      id: 'uid000',
+      answers: {
+        "aid000": "optionOne",
+        "aid001": "optionOne",
+        "aid002": "optionTwo",
+        "aid005": "optionTwo"
+      },
+    },
+    {
+      id: 'uid002',
+      answers: {
+        "aid003": "optionOne",
+        "aid004": "optionOne",
+      },
+    }
+  ];
+
+  expect(sortByAnswersCount(users)).toEqual(sortedUsers);
+});

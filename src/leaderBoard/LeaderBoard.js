@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
+import { getArFromDict, sortByAnswersCount } from '../utilities/utilities';
 
 export class LeaderBoard extends Component {
   constructor(props) {
@@ -18,13 +19,9 @@ export class LeaderBoard extends Component {
     }
 
     if (users && users.users) {
-      usersAr = Object.keys(users.users).map(uid => users.users[uid]);
-      usersAr.sort((a, b) => {
-        let bNumAnswers = Object.keys(b.answers).length;
-        let aNumAnswers = Object.keys(a.answers).length;
-        return bNumAnswers - aNumAnswers;
-      });
-
+      usersAr = getArFromDict(users.users)
+      usersAr = sortByAnswersCount(usersAr);
+      console.log('usersAr: ' + JSON.stringify(usersAr));
     }
 
     return (

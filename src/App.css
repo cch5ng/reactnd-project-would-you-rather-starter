@@ -1,13 +1,12 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 300;
 }
 
 .App {
   /*text-align: center;*/
-  margin: 0 5% 20px 5%;
 }
 
 h1,
@@ -22,10 +21,22 @@ h4 {
   to { transform: rotate(360deg); }
 }
 */
+
+/* bootstrap overwrite */
+
+.navbar-light .navbar-brand {
+  color: #d9372f;
+}
+
+
 /* Nav */
 
+.bg-blue {
+  background-color: #64c9ce;
+}
+
 .header {
-  background-color: #1f2035;
+  background-color: #64c9ce; /*#70e0e5; #1f2035;*/
   box-sizing: border-box;
   /*color: white;*/
 }
@@ -36,10 +47,14 @@ h4 {
 
 .header-main,
 .header-contact {
-  color: #f5ffa6; /*#d8f2e1;*/
+  color: #d9372f; /*#f5ffa6; #d8f2e1;*/
   width: 100%;
   text-align: center;
   text-decoration: none;
+}
+
+.header-main {
+  font-family: 'Gugi', cursive;
 }
 
 .contact {
@@ -54,6 +69,10 @@ h4 {
   color: #fff;
   text-decoration: none;
   display: block;
+}
+
+main {
+  margin: 0 5% 20px 5%;
 }
 
 /* Form */
@@ -109,10 +128,33 @@ textarea:focus {
   box-shadow: 0 0 10px #c0e585; /*#d6ff94; #d6ff94;*/
 }
 
+.select-login,
+.link-logout {
+  background-color: #64c9ce;
+  border: none;
+  margin-top: 7px;
+  font-size: 16px;
+  color: rgba(0,0,0,.5); /* match bootstrap */
+}
+
+.link-logout {
+  padding-top: 7px;
+}
+
+/* bootstrap footer */
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
+
 @media (min-width: 768px) {
 
   .header {
-    background-color: #1f2035;
     height: 140px;
   }
 
@@ -124,7 +166,7 @@ textarea:focus {
 
   .header-main,
   .header-contact {
-    width: calc(50% - 30px / 2);
+    width: 50%;
   }
 
   .header-main {
@@ -138,6 +180,7 @@ textarea:focus {
     vertical-align: top;
     margin-top: 8px;
     margin-right: 15px;
+    width: 50%;
   }
 
   .contact {

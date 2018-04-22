@@ -83,29 +83,48 @@ export class App extends Component {
     return (
       <Router>
         <div className="App">
-          <header className="header title">
-            <div className="header-main">
-              <h2><Link to="/" className="header-main">Would You Rather</Link></h2>
+          <nav className="navbar navbar-expand-lg navbar-light bg-blue">
+            <Link to="/" className="navbar-brand header-main">WOULD YOU RATHER</Link>
+
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">Questions</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/add" className="nav-link">New Question</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/leaderboard" className="nav-link">Leader Board</Link>
+                </li>
+
+                {isLoggedIn === false && (
+                  <li className="nav-item">
+                    <select value={this.state.loginUser} 
+                      onChange={this.onChangeHandler} name="loginUser"
+                      className="select-login">
+
+                      <option value="">Login</option>
+                      {userAr.map(user => {
+                        return (<option value={user["id"]} key={user["id"]}>{user["name"]}</option>)
+                      })}
+                    </select>
+                  </li>
+                )}
+
+                {isLoggedIn === true && (
+                  <li className="nav-item">
+                    <Link to="/" onClick={this.logout} className="nav-link">Logout {curUser}</Link>
+                  </li>
+                )}
+              </ul>
             </div>
-            <div className="header-contact">
-              <p className="contact">
-                <Link to="/">Questions</Link>
-                <Link to="/add">New Question</Link>
-                <Link to="/leaderboard">Leader Board</Link>
-              </p>
-              {isLoggedIn === false && (
-                <select value={this.state.loginUser} onChange={this.onChangeHandler} name="loginUser">
-                  <option value="">Login</option>
-                  {userAr.map(user => {
-                    return (<option value={user["id"]} key={user["id"]}>{user["name"]}</option>)
-                  })}
-                </select>
-              )}
-              {isLoggedIn === true && (
-                <Link to="/" onClick={this.logout} >Logout {curUser}</Link>
-              )}
-            </div>
-          </header>
+          </nav>
+
 
           <main>
             <Route exact path="/" render={() => (
@@ -134,7 +153,10 @@ export class App extends Component {
             />
           </main>
 
-          <footer>Link to source
+          <footer class="footer">
+            <div class="container">
+              <span class="text-muted">Place sticky footer content here.</span>
+            </div>
           </footer>
         </div>
       </Router>

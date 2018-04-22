@@ -25,6 +25,13 @@ export function sortByPropertyDesc(ar, prop) {
   return ar;
 }
 
+/*
+ * @param 
+ * @param 
+ * @return 
+ *
+ * 
+ */
 export function getPrettyQuestion(qid, questionsDict) {
   if (questionsDict && qid) {
     let option1 = questionsDict[qid]['optionOne']['text'];
@@ -34,6 +41,13 @@ export function getPrettyQuestion(qid, questionsDict) {
   return
 }
 
+/*
+ * @param {obj} {question_id: <selected_answer>}
+ * @param {obj} {question_id: {question_obj}}
+ * @return {ar} [id, id]
+ *
+ * 
+ */
 export function getUnansweredQuestions(userAnswers, allQuestions) {
     let unansweredQuestions;
     let answeredSet;
@@ -52,18 +66,23 @@ export function getUnansweredQuestions(userAnswers, allQuestions) {
     return unansweredQuestions;
   }
 
+/*
+ *
+ *
+ * ?Math.ceil vs Math.floor?
+ */
 export function getPercentVoted(numVotes, totalUsers) {
-  return numVotes / totalUsers * 100;
+  return Math.ceil(numVotes / totalUsers * 100);
 }
 
-  /*
-   * @param {ar} [{user}, ...]
-   * @return {ar} [{user}, ...]
-   *
-   * Given array of users, sorts by number of questions answered (max => min)
-   * Did not abstract this with other helpers because need to sort by number of
-   * keys for answers object value
-   */
+/*
+ * @param {ar} [{user}, ...]
+ * @return {ar} [{user}, ...]
+ *
+ * Given array of users, sorts by number of questions answered (max => min)
+ * Did not abstract this with other helpers because need to sort by number of
+ * keys for answers object value
+ */
 export function sortByAnswersCount(ar) {
     ar.sort((a, b) => {
       let bNumAnswers = Object.keys(b.answers).length;

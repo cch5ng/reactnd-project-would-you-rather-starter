@@ -53,13 +53,89 @@ test('sortByPropertyDesc', () => {
    expect(sortByPropertyDesc(questions, 'timestamp')).toEqual(sortedQuestions);
 });
 
-// test('getPrettyQuestion', () => {
-//   expect(isCity('San Juan')).toBeTruthy();
-// });
+test('getPrettyQuestion', () => {
 
-// test('getUnansweredQuestions', () => {
-//   expect(isCity('San Juan')).toBeTruthy();
-// });
+  let questions = {
+    "qid000": {
+      id: 'qid000',
+      author: 'sarahedo',
+      timestamp: 1467166872634,
+      optionOne: {
+        votes: ['sarahedo'],
+        text: 'eat pizza',
+      },
+      optionTwo: {
+        votes: [],
+        text: 'eat a hamburger'
+      }
+    },
+    "qid001": {
+      id: 'qid001',
+      author: 'johndoe',
+      timestamp: 1468479767190,
+      optionOne: {
+        votes: [],
+        text: 'have dark roast coffee',
+      },
+      optionTwo: {
+        votes: ['johndoe', 'sarahedo'],
+        text: 'have light roast coffee'
+      }
+    },
+  }
+
+   expect(getPrettyQuestion('qid001', questions)).toBe('have dark roast coffee OR have light roast coffee?');
+});
+
+test('getUnansweredQuestions', () => {
+  let userAnswers = {
+      "qid001": 'have dark roast coffee'
+  };
+
+  let questions = {
+    "qid000": {
+      id: 'qid000',
+      author: 'sarahedo',
+      timestamp: 1467166872634,
+      optionOne: {
+        votes: ['sarahedo'],
+        text: 'eat pizza',
+      },
+      optionTwo: {
+        votes: [],
+        text: 'eat a hamburger'
+      }
+    },
+    "qid001": {
+      id: 'qid001',
+      author: 'johndoe',
+      timestamp: 1468479767190,
+      optionOne: {
+        votes: [],
+        text: 'have dark roast coffee',
+      },
+      optionTwo: {
+        votes: ['johndoe', 'sarahedo'],
+        text: 'have light roast coffee'
+      }
+    },
+    "qid002": {
+      id: 'qid002',
+      author: 'johndoe',
+      timestamp: 1468479767190,
+      optionOne: {
+        votes: [],
+        text: 'work late',
+      },
+      optionTwo: {
+        votes: ['johndoe', 'sarahedo'],
+        text: 'work early'
+      }
+    },
+  };
+
+  expect(getUnansweredQuestions(userAnswers, questions)).toEqual(["qid000", "qid002"]);
+});
 
 // test('getPercentVoted', () => {
 //   expect(isCity('San Juan')).toBeTruthy();

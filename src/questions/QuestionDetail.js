@@ -110,8 +110,10 @@ export class QuestionDetail extends Component {
         {isLoggedIn && !questionAnswered && (
           <div>
             <h1><img src={avatarUrl} alt="user avatar" className="avatar" /> Would You Rather?</h1>
-            <p id="optionOne" className="optionOne" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>1: {option1Text}</p>
-            <p id="optionTwo" className="optionTwo" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>2: {option2Text}</p>
+            <div className="row">
+              <p id="optionOne" className="option" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>1: {option1Text}</p>
+              <p id="optionTwo" className="option" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>2: {option2Text}</p>
+            </div>
           </div>
         )}
 

@@ -155,7 +155,7 @@ export class App extends Component {
 
           <footer className="footer">
             <div className="container">
-              <span className="text-muted">Place sticky footer content here.</span>
+              <p className="text-muted">Made with 🌮 by <a href="https://github.com/cch5ng" target="_blank" className="footer-link">cch5ng</a> | <a href="https://github.com/cch5ng/reactnd-project-would-you-rather-starter" target="_blank" className="footer-link">Source</a></p>
             </div>
           </footer>
         </div>

@@ -42,6 +42,9 @@ export class QuestionDetail extends Component {
     let option2Votes;
     let option2VotePercent;
     let avatarUrl = '';
+    let userAnswer;
+    let questionClass1 = 'question-answered'
+    let questionClass2 = 'question-answered'
 
     if (login && login.isLoggedIn) {
       isLoggedIn = login.isLoggedIn;
@@ -69,32 +72,48 @@ export class QuestionDetail extends Component {
       if (userAnsweredQuestions.indexOf(qid) > -1) {
         questionAnswered = true;
       }
+      userAnswer = userDictionary[loggedInId]['answers'][qid];
+      console.log('userAnswer: ' + userAnswer)
+      if (userAnswer === 'optionOne') {
+        questionClass1 = "question-answered user-selected"
+      }
+      if (userAnswer === 'optionTwo') {
+        questionClass2 = "question-answered user-selected"
+      }
     }
 
     return (
       <div className="">
-        <h1>Would You Rather?</h1>
         {isLoggedIn && questionAnswered && (
           <div>
-            <p><img src={avatarUrl} alt="user avatar" /></p>
-            <div>
-              <p>1: {option1Text}</p>
-              <p>votes: {option1Votes}</p>
-              <p>percent who voted: {option1VotePercent}(% of all users)</p>
-            </div>
-            <div>
-              <p>2: {option2Text}</p>
-              <p>votes: {option2Votes}</p>
-              <p>percent who voted: {option2VotePercent}(% of all users)</p>
+            <h1>Users Answered</h1>
+            <p><img src={avatarUrl} alt="user avatar" className="avatar" /></p>
+            <div className="row">
+              <div className={questionClass1}>
+                <p>1: {option1Text}</p>
+                <div className="row row-circle">
+                  <div className="vote-circle">{option1Votes} votes</div>
+                  <div className="vote-circle">{option1VotePercent} % voted</div>
+                </div>
+              </div>
+              <div className={questionClass2}>
+                <p>2: {option2Text}</p>
+                <div className="row row-circle">
+                  <div className="vote-circle">{option2Votes} votes</div>
+                  <div className="vote-circle">{option2VotePercent} % voted</div>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
         {isLoggedIn && !questionAnswered && (
           <div>
-            <p><img src={avatarUrl} alt="user avatar" /></p>
-            <p className="optionOne" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.className)}>1: {option1Text}</p>
-            <p className="optionTwo" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.className)}>2: {option2Text}</p>
+            <h1><img src={avatarUrl} alt="user avatar" className="avatar" /> Would You Rather?</h1>
+            <div className="row">
+              <p id="optionOne" className="option" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>1: {option1Text}</p>
+              <p id="optionTwo" className="option" onClick={(ev) => this.onClickHandler(loggedInId, qid, ev.target.id)}>2: {option2Text}</p>
+            </div>
           </div>
         )}
 

@@ -52,16 +52,18 @@ export class QuestionForm extends Component {
 
     return (
       <div className="">
-        <h2>Would You Rather</h2>
+        <h1>Add a Question</h1>
 
         {isLoggedIn && (
           <form className="question-form">
-            <label>Option 1
-              <input type="text" className="" name="optionOne" onChange={this.onChange} />
-            </label>
-            <label>Option 2
-              <input type="text" className="" name="optionTwo" onChange={this.onChange} />
-            </label>
+            <input type="text" className="input-text" name="optionOne" onChange={this.onChange} 
+              placeholder="Option 1"
+            />
+            <br />
+            <input type="text" className="input-text" name="optionTwo" onChange={this.onChange}
+              placeholder="Option 2"
+            />
+            <br />
             <button value="save" onClick={(ev) => this.onSubmit(ev, loggedInId)}>Save</button>
           </form>
         )}

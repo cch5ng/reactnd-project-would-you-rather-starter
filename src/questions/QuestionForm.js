@@ -52,7 +52,7 @@ export class QuestionForm extends Component {
 
     return (
       <div className="">
-        <h2>Would You Rather</h2>
+        <h1>Add a Question</h1>
 
         {isLoggedIn && (
           <form className="question-form">

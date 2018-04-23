@@ -26,22 +26,24 @@ export class LeaderBoard extends Component {
 
     return (
       <div className="">
-        <h2>Leader Board</h2>
+        <h1>Leader Board</h1>
+        <div className="spacer-sm"></div>
+        <div className="row row-circle">
+          {isLoggedIn && (
+            usersAr.map(user => {
+              let numQuestionsAnswered = Object.keys(user.answers).length;
 
-        {isLoggedIn && (
-          usersAr.map(user => {
-            let numQuestionsAnswered = Object.keys(user.answers).length;
-
-            return (
-              <div key={user.id}>
-                <p>{user.name}</p>
-                <p><img src={user.avatarURL} alt="user avatar" /></p>
-                <p># Questions answered: {numQuestionsAnswered}</p>
-                <p># Questions asked: {user.questions.length}</p>
-              </div>
-            )
-          })
-        )}
+              return (
+                <div key={user.id} className="leader-circle">
+                  <h2>{user.name}</h2>
+                  <p><img src={user.avatarURL} alt="user avatar" className="avatar" /></p>
+                  <p>{numQuestionsAnswered} Questions answered</p>
+                  <p>{user.questions.length} Questions asked</p>
+                </div>
+              )
+            })
+          )}
+        </div>
 
         {!isLoggedIn && (
           <div>Sorry, you need to log in to view this page.</div>

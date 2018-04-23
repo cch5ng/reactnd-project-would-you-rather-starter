@@ -65,12 +65,11 @@ class Questions extends Component {
         <h1>Questions</h1>
         {isLoggedIn && (
           <div>
-            <label>Filter by questions 
+            <label> 
               <select value={this.state.loginUser} onChange={this.onChangeHandler} name="questionType">
-                <option value="unanswered">Unanswered</option>
-                <option value="answered">Answered</option>
+                <option value="unanswered">Unanswered Questions</option>
+                <option value="answered">Answered Questions</option>
               </select>
-               by this user
             </label>
 
             <hr />
@@ -80,7 +79,7 @@ class Questions extends Component {
               let link = `/questions/${qid}`
               return (
                 <div key={qid}>
-                  <h1><Link to={link} className="question-list">Would You Rather: {prettyQuestion}</Link></h1>
+                  <h2><Link to={link} className="question-list">Would You Rather: {prettyQuestion}</Link></h2>
                 </div>
               )
             })}

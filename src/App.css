@@ -16,6 +16,14 @@ h4 {
   font-weight: 400;
 }
 
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
 /*@keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -69,6 +77,18 @@ h4 {
   color: #fff;
   text-decoration: none;
   display: block;
+}
+
+.navbar-light a.navbar-brand:visited,
+.navbar-light a.navbar-brand:hover,
+.navbar-light a.navbar-brand:focus,
+.navbar-light a.navbar-brand:active {
+  color: #d9372f;
+}
+
+a.question-list:link,
+a.question-list:visited {
+  color: #4c4c4c;
 }
 
 main {
